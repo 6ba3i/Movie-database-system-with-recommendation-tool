@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}My Movie App{% endblock %}</title>
+  <!-- Import the Syne font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Global Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Syne', sans-serif; background-color: #fefef7; color: #333; }
+
+    /* Navbar */
+    nav {
+      background: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .nav-left a {
+      color: #fefef7;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 20px;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+    .nav-right form {
+      margin-right: 20px;
+    }
+    .nav-right input[type="text"] {
+      padding: 0.3rem 0.6rem;
+      border: 1px solid #fefef7;
+      border-radius: 4px;
+      outline: none;
+      margin-right: 0.5rem;
+    }
+    .nav-right button {
+      background: #fefef7;
+      color: #333;
+      border: none;
+      padding: 0.4rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .nav-right button:hover { background: #ddd; }
+
+    /* Profile Widget */
+    .profile-widget {
+      position: relative; /* Positions dropdown relative to this container */
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      border-radius: 4px;
+      background: #444;
+      cursor: pointer;
+    }
+    .profile-widget span {
+      color: #fefef7;  /* White text for contrast */
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    .profile-widget img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    /* Sign Up / Login Links for Logged-out Users */
+    .auth-links a {
+      color: #fefef7;
+      text-decoration: none;
+      font-size: 14px;
+      margin-left: 15px;
+      border: 1px solid #fefef7;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .auth-links a:hover {
+      background: #555;
+    }
+
+    /* Dropdown Menu */
+    #dropdownMenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      z-index: 1;
+    }
+    #dropdownMenu a {
+      display: block;
+      padding: 10px;
+      color: #333;
+      text-decoration: none;
+    }
+    #dropdownMenu a:hover {
+      background: #f0f0f0;
+    }
+
+    /* Flash Messages */
+    .flash-messages {
+      width: 90%;
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    .flash-messages ul { list-style: none; padding: 0; }
+    .flash-messages li {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      background: #eee;
+      border-radius: 6px;
+    }
+
+    /* Main Container */
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Spacing for Movie Sections */
+    .movie-slider {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 1rem;
+      margin-bottom: 20px;
+    }
+    .movie-slider::-webkit-scrollbar { height: 8px; }
+    .movie-slider::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+    hr {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Movie Widgets */
+    .movie-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .movie-box {
+      flex: 0 0 auto;
+      width: 160px;
+      margin: 0.5rem;
+      border: 1px solid #333;
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .movie-box strong { display: block; margin-bottom: 0.5rem; }
+    .rounded-img {
+      border-radius: 8px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 160px;
+      margin: 0 auto;
+    }
+    .rounded-img img { width: 100%; display: block; }
+    .button-link {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border: 1px solid #333;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #333;
+      background: #fefef7;
+      margin-top: 0.5rem;
+    }
+    .button-link:hover { background: #ddd; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-left">
+      <a href="{{ url_for('index') }}">Movie App</a>
+    </div>
+    <div class="nav-right">
+      <form action="{{ url_for('search_route') }}" method="GET">
+        <input type="text" name="query" placeholder="Search movies...">
+        <button type="submit">Search</button>
+      </form>
+      {% if session.get('uid') %}
+      <div class="profile-widget" onclick="toggleDropdown(event)">
+          <span>Hello {{ session.get('profile', {}).get('name', 'User') }}!</span>
+          <img src="{{ session.get('profile', {}).get('pfp_url', url_for('static', filename='default.png')) }}"
+               alt="Profile">
+          <div id="dropdownMenu">
+              <a href="{{ url_for('profile_settings') }}">Profile Settings</a>
+              <a href="{{ url_for('logout') }}">Logout</a>
+          </div>
+      </div>
+      {% else %}
+      <div class="auth-links">
+          <a href="{{ url_for('signup') }}">Sign Up</a>
+          <a href="{{ url_for('login') }}">Login</a>
+      </div>
+      {% endif %}
+    </div>
+    <script>
+         function toggleDropdown(e) {
+             // Prevent the click from propagating to the window handler.
+             e.stopPropagation();
+             var dropdown = document.getElementById('dropdownMenu');
+             if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                 dropdown.style.display = 'block';
+             } else {
+                 dropdown.style.display = 'none';
+             }
+         }
+         window.onclick = function(event) {
+             if (!event.target.closest('.profile-widget')) {
+                 var dropdown = document.getElementById('dropdownMenu');
+                 if (dropdown && dropdown.style.display === 'block') {
+                     dropdown.style.display = 'none';
+                 }
+             }
+         }
+    </script>
+  </nav>
+
+  <div class="flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li><strong>{{ category }}:</strong> {{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

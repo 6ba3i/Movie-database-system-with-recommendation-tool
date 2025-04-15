@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1>Home</h1>
+<p>Welcome {{ session.get('user_email') }}!</p>
+
+<h2>Recommended For You</h2>
+<div class="movie-slider">
+  {% for movie in recommended %}
+    <div class="movie-box">
+      <strong>{{ movie.title }}</strong>
+      {% if movie.poster_path %}
+        <div class="rounded-img">
+          <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+        </div>
+      {% else %}
+        <p>No Poster</p>
+      {% endif %}
+      <p>Rating: {{ movie.vote_average }}</p>
+      <a href="{{ url_for('movie_detail_route', movie_id=movie.id) }}" class="button-link">See More</a>
+    </div>
+  {% endfor %}
+</div>
+
+<hr>
+<h2>Popular Movies</h2>
+<div class="movie-slider">
+  {% for movie in top_movies %}
+    <div class="movie-box">
+      <strong>{{ movie.title }}</strong>
+      {% if movie.poster_path %}
+        <div class="rounded-img">
+          <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+        </div>
+      {% else %}
+        <p>No Poster</p>
+      {% endif %}
+      <p>Rating: {{ movie.vote_average }}</p>
+      <a href="{{ url_for('movie_detail_route', movie_id=movie.id) }}" class="button-link">See More</a>
+    </div>
+  {% endfor %}
+</div>
+
+<hr>
+<h2>Your Watchlist</h2>
+{% if watchlist_preview %}
+  <div class="movie-slider">
+    {% for mv in watchlist_preview %}
+      <div class="movie-box">
+        <strong>{{ mv.title }}</strong>
+        {% if mv.poster_path %}
+          <div class="rounded-img">
+            <img src="https://image.tmdb.org/t/p/w200{{ mv.poster_path }}" alt="{{ mv.title }}">
+          </div>
+        {% else %}
+          <p>No Poster</p>
+        {% endif %}
+        <p>Rating: {{ mv.vote_average }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <p style="margin-top: 1rem;">
+    <a href="{{ url_for('my_watchlist') }}" class="button-link">See More</a>
+  </p>
+{% else %}
+  <p>You have nothing in your watchlist yet.</p>
+{% endif %}
+{% endblock %}

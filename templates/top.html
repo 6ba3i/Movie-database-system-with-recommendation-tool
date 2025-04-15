@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Top Movies{% endblock %}
+
+{% block content %}
+  <h1>Top Movies</h1>
+  <div class="movie-container">
+    {% for movie in movies %}
+      <div class="movie-box">
+        <strong>{{ movie.title }}</strong><br>
+        {% if movie.poster_path %}
+          <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" 
+               alt="{{ movie.title }}">
+        {% else %}
+          <p>No poster</p>
+        {% endif %}
+        <p>Rating: {{ movie.vote_average }}</p>
+        <p>Release: {{ movie.release_date }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

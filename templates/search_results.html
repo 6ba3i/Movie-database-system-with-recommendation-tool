@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+  <h1>Search Results for "{{ query }}"</h1>
+  <div class="movie-container">
+    {% for movie in results %}
+      <div class="movie-box">
+        <strong>{{ movie.title }}</strong>
+        {% if movie.poster_path %}
+          <div class="rounded-img">
+            <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+          </div>
+        {% else %}
+          <p>No Poster</p>
+        {% endif %}
+        <p>Rating: {{ movie.vote_average }}</p>
+        <a href="{{ url_for('movie_detail_route', movie_id=movie.id) }}" class="button-link">See More</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

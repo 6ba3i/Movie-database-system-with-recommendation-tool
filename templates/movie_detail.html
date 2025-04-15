@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Movie Detail{% endblock %}
+{% block content %}
+  <div style="max-width: 800px; margin: 0 auto; border: 1px solid #333; border-radius: 10px; background: #fff; padding: 1rem;">
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: flex-start;">
+      <div style="flex: 0 0 auto;">
+        {% if movie.poster_path %}
+          <div class="rounded-img" style="width: 300px;">
+            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }}">
+          </div>
+        {% else %}
+          <p>No Poster</p>
+        {% endif %}
+      </div>
+      <div style="flex: 1; min-width: 250px;">
+        <h1 style="margin-bottom: 0.5rem;">{{ movie.title }}</h1>
+        <p><strong>Rating:</strong> {{ movie.vote_average }}</p>
+        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+        <p><strong>Director:</strong> {{ movie.director if movie.director else "Not found" }}</p>
+        <p><strong>Top Actors:</strong> {{ movie.top_actor_names|join(', ') }}</p>
+        <p><strong>Overview:</strong><br>{{ movie.overview }}</p>
+        <form method="POST" action="{{ url_for('add_to_watchlist_route', movie_id=movie.id) }}">
+          <button type="submit" style="margin-top:1rem; padding:0.5rem 1rem; border:1px solid #333; border-radius:6px; background:#fefef7; cursor:pointer;">
+            Add to Watchlist
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
