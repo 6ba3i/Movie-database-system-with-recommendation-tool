@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Sign Up - Customization{% endblock %}
+{% block content %}
+<h1>Sign Up - Customization</h1>
+<form method="POST" action="{{ url_for('signup_customization') }}" enctype="multipart/form-data">
+  <label>Name:</label><br>
+  <input type="text" name="name" required><br><br>
+  
+  <label>Age:</label><br>
+  <input type="number" name="age" required><br><br>
+  
+  <label>Favorite Genres (hold Ctrl to select multiple):</label><br>
+  <select name="genres" multiple required>
+       <option value="28">Action</option>
+       <option value="12">Adventure</option>
+       <option value="16">Animation</option>
+       <option value="35">Comedy</option>
+       <option value="80">Crime</option>
+       <option value="99">Documentary</option>
+       <option value="18">Drama</option>
+       <option value="10751">Family</option>
+       <option value="14">Fantasy</option>
+       <option value="36">History</option>
+       <option value="27">Horror</option>
+       <option value="10402">Music</option>
+       <option value="9648">Mystery</option>
+       <option value="10749">Romance</option>
+       <option value="878">Science Fiction</option>
+       <option value="10770">TV Movie</option>
+       <option value="53">Thriller</option>
+       <option value="10752">War</option>
+       <option value="37">Western</option>
+  </select><br><br>
+  
+  <label>Profile Picture:</label><br>
+  <input type="file" name="pfp"><br><br>
+  
+  <button type="submit">Sign Up</button>
+</form>
+{% endblock %}

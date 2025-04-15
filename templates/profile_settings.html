@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Profile Settings{% endblock %}
+{% block content %}
+<h1>Profile Settings</h1>
+<form method="POST" action="{{ url_for('profile_settings') }}" enctype="multipart/form-data">
+    <label>Name:</label><br>
+    <input type="text" name="name" value="{{ profile.name or '' }}"><br><br>
+    
+    <label>Change Password:</label><br>
+    <input type="password" name="password" placeholder="Enter new password"><br><br>
+    
+    <label>Update Profile Picture:</label><br>
+    <input type="file" name="pfp"><br><br>
+    
+    <button type="submit">Update Profile</button>
+</form>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}My Watchlist{% endblock %}
+{% block content %}
+  <h1>My Watchlist</h1>
+  {% if watchlist %}
+    <div class="movie-container">
+      {% for mv in watchlist %}
+        <div class="movie-box">
+          <!-- Clickable area for movie details -->
+          <a class="movie-link" href="{{ url_for('movie_detail_route', movie_id=mv.id) }}" style="text-decoration:none; color:inherit; width:100%;">
+            {% if mv.poster_path %}
+              <div class="rounded-img">
+                <img src="https://image.tmdb.org/t/p/w200{{ mv.poster_path }}" alt="{{ mv.title }}">
+              </div>
+            {% else %}
+              <div class="rounded-img">
+                <p>No Poster</p>
+              </div>
+            {% endif %}
+            <div class="movie-title">{{ mv.title }}</div>
+            <div class="movie-rating">Rating: {{ mv.vote_average }}</div>
+          </a>
+          <!-- Remove button outside the clickable area -->
+          <form class="remove-form" method="POST" action="{{ url_for('remove_from_watchlist_route', movie_id=mv.id) }}" onsubmit="event.stopPropagation();">
+            <button type="submit" class="remove-button">Remove</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>You have nothing in your watchlist.</p>
+  {% endif %}
+
+  <style>
+    /* Styles specific to the watchlist (if not covered by global rules) */
+    .movie-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .remove-form {
+      margin-top: 5px;
+      width: 100%;
+    }
+    .remove-button {
+      width: 100%;
+      padding: 5px 0;
+      border: none;
+      background: #f44336;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .remove-button:hover {
+      background: #d32f2f;
+    }
+  </style>
+{% endblock %}
