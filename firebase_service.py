@@ -35,6 +35,3 @@ def remove_from_watchlist(uid, movie_id):
 def get_watchlist(uid):
     docs = db.collection("users").document(uid).collection("watchlist").stream()
     return [doc.to_dict() for doc in docs]
-
-# --------- Storage ---------
-# Removed upload_profile_picture function since we'll be handling images locally.
