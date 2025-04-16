@@ -1,4 +1,4 @@
-# My Movie App
+# MDBS : Movie Database system
 
 A personalized movie recommendation and watchlist application built using Flask, Firebase, and the TMDB API. This project allows users to sign up, log in, search for movies, and manage a personal watchlist. It integrates Firebase Authentication and Firestore for user profiles while retrieving movie data from The Movie Database (TMDB).
 
