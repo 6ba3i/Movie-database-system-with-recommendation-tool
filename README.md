@@ -71,5 +71,40 @@ My Movie App is a web application that enables users to:
    ```bash
    pip install -r requirements.txt
    ```
+## Firebase Setup and Service Key Instructions
+1. Create a Firebase Account and Project
+   - Visit the Firebase Console:
+     Go to Firebase Console and sign in with your Google account.
+
+   - Create a New Project:
+     Click "Add project" and follow the prompts. Provide a project name (e.g., "My Movie App") and configure any settings you prefer.
+
+2. Add a Web App to the Firebase Project
+   - Register Your App:
+     In the Firebase Console project overview, click on "Project settings" (gear icon) and under "Your apps", click the </> (Web) icon.
+
+   - Set Up Your App:
+     Follow the steps to register your web app. You will be provided with a Web API Key. Save this key – you'll need it for authenticating via Firebase Auth REST API (see Configuration).
+
+3. Enable Email/Password Authentication
+   - Navigate to Authentication:
+     Click on "Build" in the left-hand menu, then select "Authentication".
+
+   - Enable Sign-In Method:
+     Under the "Sign-in method" tab, enable "Email/Password" authentication.
+
+4. Generate and Download Your Service Key
+   - Go to Service Accounts:
+     In your Firebase Console, click on the gear icon next to "Project Overview" and select "Project settings". Then select the "Service accounts" tab.
+
+   - Generate New Private Key:
+     Click "Generate new private key". A JSON file will be downloaded automatically.
+     Important: Rename this file to serviceAccountKey.json.
+
+   - Place the File Securely:
+     Move the serviceAccountKey.json file to the root directory of your project.
+## Configuration
+   Firebase Initialization
+   In your code ('''firebase_service.py'''), use the service key for Firebase initialization:
 
    
