@@ -71,7 +71,9 @@ My Movie App is a web application that enables users to:
    ```bash
    pip install -r requirements.txt
    ```
+   
 ## Firebase Setup and Service Key Instructions
+
 1. Create a Firebase Account and Project
    - Visit the Firebase Console:
      Go to Firebase Console and sign in with your Google account.
@@ -103,8 +105,34 @@ My Movie App is a web application that enables users to:
 
    - Place the File Securely:
      Move the serviceAccountKey.json file to the root directory of your project.
+     
 ## Configuration
-   Firebase Initialization
-   In your code ('''firebase_service.py'''), use the service key for Firebase initialization:
 
+1. Firebase Initialization
+   In your code (firebase_service.py), use the service key for Firebase initialization:
+
+   ```bash
+   import os
+   from firebase_admin import credentials, initialize_app
+
+   # Set the path to your service account key file
+   service_key_path = "serviceAccountKey.json"  # Update the path if needed
+
+   cred = credentials.Certificate(service_key_path)
+   initialize_app(cred)
+   ```
+2. Firebase API Key
+   Replace the placeholder in your code (login route in main.py) with your Web API Key noted during app registration:
+   
+   ```bash
+   api_key = "YOUR_FIREBASE_API_KEY_HERE"  # Replace this with the Firebase Web API Key
+   ```
+3. Running the Application
+   After completing the configuration steps, start the Flask development server:
+
+   ```bash
+   python main.py
+   ```
+   Then, visit http://127.0.0.1:5000 in your browser to see your app in action.
+   
    
