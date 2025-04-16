@@ -11,7 +11,7 @@
       <strong>{{ movie.title }}</strong>
       {% if movie.poster_path %}
         <div class="rounded-img">
-          <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+          <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }}">
         </div>
       {% else %}
         <p>No Poster</p>
@@ -30,7 +30,7 @@
       <strong>{{ movie.title }}</strong>
       {% if movie.poster_path %}
         <div class="rounded-img">
-          <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+          <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }}">
         </div>
       {% else %}
         <p>No Poster</p>
@@ -50,7 +50,7 @@
         <strong>{{ mv.title }}</strong>
         {% if mv.poster_path %}
           <div class="rounded-img">
-            <img src="https://image.tmdb.org/t/p/w200{{ mv.poster_path }}" alt="{{ mv.title }}">
+            <img src="https://image.tmdb.org/t/p/w300{{ mv.poster_path }}" alt="{{ mv.title }}">
           </div>
         {% else %}
           <p>No Poster</p>

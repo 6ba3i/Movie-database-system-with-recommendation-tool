@@ -1,17 +1,78 @@
 {% extends "base.html" %}
 {% block title %}Profile Settings{% endblock %}
 {% block content %}
-<h1>Profile Settings</h1>
-<form method="POST" action="{{ url_for('profile_settings') }}" enctype="multipart/form-data">
-    <label>Name:</label><br>
-    <input type="text" name="name" value="{{ profile.name or '' }}"><br><br>
+<div class="auth-container">
+  <h1>Profile Settings</h1>
+  <form method="POST" action="{{ url_for('profile_settings') }}" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="{{ profile.name or '' }}" required>
     
-    <label>Change Password:</label><br>
-    <input type="password" name="password" placeholder="Enter new password"><br><br>
+    <label for="password">Change Password:</label>
+    <input type="password" id="password" name="password" placeholder="Enter new password">
     
-    <label>Update Profile Picture:</label><br>
-    <input type="file" name="pfp"><br><br>
+    <label for="pfp">Update Profile Picture:</label>
+    <input type="file" id="pfp" name="pfp">
     
     <button type="submit">Update Profile</button>
-</form>
+  </form>
+</div>
+
+<style>
+  /* Using a consistent auth-container style from your signup and login pages */
+  .auth-container {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 60px auto;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  }
+  .auth-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .auth-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  .auth-container label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+  }
+  .auth-container input[type="text"],
+  .auth-container input[type="password"],
+  .auth-container input[type="file"] {
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    outline: none;
+    color: #333;
+  }
+  .auth-container input[type="text"]:focus,
+  .auth-container input[type="password"]:focus {
+    border: 2px solid #252525;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .auth-container button {
+    padding: 12px 15px;
+    font-size: 18px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .auth-container button:hover {
+    background: #444;
+  }
+</style>
 {% endblock %}

@@ -1,40 +1,183 @@
 {% extends "base.html" %}
 {% block title %}Sign Up - Customization{% endblock %}
 {% block content %}
-<h1>Sign Up - Customization</h1>
-<form method="POST" action="{{ url_for('signup_customization') }}" enctype="multipart/form-data">
-  <label>Name:</label><br>
-  <input type="text" name="name" required><br><br>
-  
-  <label>Age:</label><br>
-  <input type="number" name="age" required><br><br>
-  
-  <label>Favorite Genres (hold Ctrl to select multiple):</label><br>
-  <select name="genres" multiple required>
-       <option value="28">Action</option>
-       <option value="12">Adventure</option>
-       <option value="16">Animation</option>
-       <option value="35">Comedy</option>
-       <option value="80">Crime</option>
-       <option value="99">Documentary</option>
-       <option value="18">Drama</option>
-       <option value="10751">Family</option>
-       <option value="14">Fantasy</option>
-       <option value="36">History</option>
-       <option value="27">Horror</option>
-       <option value="10402">Music</option>
-       <option value="9648">Mystery</option>
-       <option value="10749">Romance</option>
-       <option value="878">Science Fiction</option>
-       <option value="10770">TV Movie</option>
-       <option value="53">Thriller</option>
-       <option value="10752">War</option>
-       <option value="37">Western</option>
-  </select><br><br>
-  
-  <label>Profile Picture:</label><br>
-  <input type="file" name="pfp"><br><br>
-  
-  <button type="submit">Sign Up</button>
-</form>
+  <div class="auth-container">
+    <h1>Sign Up - Customization</h1>
+    <form method="POST" action="{{ url_for('signup_customization') }}" enctype="multipart/form-data">
+      <!-- Name Input -->
+      <label>Name:</label><br>
+      <input type="text" name="name" required><br><br>
+      
+      <!-- Birthdate Input using Flatpickr for a snappy calendar UI -->
+      <label>Birthdate:</label><br>
+      <input type="text" id="birthdate" name="age" placeholder="Select your birthdate" required><br><br>
+
+      <!-- Genres Selection (Cloud Bubble Style) -->
+      <label>Favorite Genres:</label><br>
+      <div class="genres-container">
+        <button type="button" class="genre-button" data-genre="28">Action</button>
+        <button type="button" class="genre-button" data-genre="12">Adventure</button>
+        <button type="button" class="genre-button" data-genre="16">Animation</button>
+        <button type="button" class="genre-button" data-genre="35">Comedy</button>
+        <button type="button" class="genre-button" data-genre="80">Crime</button>
+        <button type="button" class="genre-button" data-genre="99">Documentary</button>
+        <button type="button" class="genre-button" data-genre="18">Drama</button>
+        <button type="button" class="genre-button" data-genre="10751">Family</button>
+        <button type="button" class="genre-button" data-genre="14">Fantasy</button>
+        <button type="button" class="genre-button" data-genre="36">History</button>
+        <button type="button" class="genre-button" data-genre="27">Horror</button>
+        <button type="button" class="genre-button" data-genre="10402">Music</button>
+        <button type="button" class="genre-button" data-genre="9648">Mystery</button>
+        <button type="button" class="genre-button" data-genre="10749">Romance</button>
+        <button type="button" class="genre-button" data-genre="878">Science Fiction</button>
+        <button type="button" class="genre-button" data-genre="10770">TV Movie</button>
+        <button type="button" class="genre-button" data-genre="53">Thriller</button>
+        <button type="button" class="genre-button" data-genre="10752">War</button>
+        <button type="button" class="genre-button" data-genre="37">Western</button>
+      </div>
+      <input type="hidden" name="genres" id="selected-genres">
+      <br><br>
+      
+      <!-- Profile Picture Input -->
+      <label>Profile Picture:</label><br>
+      <input type="file" name="pfp" class="profile-pic-input"><br><br>
+      
+      <!-- Submit Button -->
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <!-- Include Flatpickr CSS and JS from CDN for an enhanced datepicker experience -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <style>
+    /* Center the form in a widget with larger width */
+    .auth-container {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 600px;
+      margin: 60px auto;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    }
+    .auth-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .auth-container form {
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-container label {
+      margin-bottom: 5px;
+      font-size: 16px;
+      color: #333;
+    }
+    .auth-container input[type="text"],
+    .auth-container input[type="date"],
+    .auth-container input[type="password"],
+    .auth-container input[type="email"] {
+      padding: 12px 15px;
+      font-size: 16px;
+      border: 1px solid #333;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+      outline: none;
+      color: #333;
+    }
+    .auth-container input[type="text"]:focus,
+    .auth-container input[type="date"]:focus {
+      border: 2px solid #252525;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .auth-container button {
+      padding: 12px 15px;
+      font-size: 18px;
+      border: 1px solid #333;
+      border-radius: 10px;
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .auth-container button:hover {
+      background: #444;
+    }
+    /* Genre Buttons (Cloud Bubble Style) */
+    .genres-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .genre-button {
+      background: #fefef7;
+      color: #333;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .genre-button:hover {
+      background: #ddd;
+    }
+    .genre-button.selected {
+      background: #ffffff;
+      color: #333;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    /* Style for Profile Picture Input */
+    .profile-pic-input {
+      padding: 12px 15px;
+      font-size: 16px;
+      border: 1px solid #333;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      color: #333;
+    }
+    .profile-pic-input:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+
+  <script>
+    // JavaScript for toggling genre button selection
+    const genreButtons = document.querySelectorAll('.genre-button');
+    const selectedGenresInput = document.getElementById('selected-genres');
+
+    genreButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        button.classList.toggle('selected');
+        updateSelectedGenres();
+      });
+    });
+
+    function updateSelectedGenres() {
+      const selectedGenres = [];
+      genreButtons.forEach(button => {
+        if (button.classList.contains('selected')) {
+          selectedGenres.push(button.getAttribute('data-genre'));
+        }
+      });
+      selectedGenresInput.value = selectedGenres.join(',');
+    }
+
+    // Initialize flatpickr for the birthdate field with an elegant, snappy calendar UI
+    flatpickr("#birthdate", {
+      altInput: true,
+      altFormat: "F j, Y",
+      dateFormat: "Y-m-d",
+      maxDate: "today",
+      allowInput: true
+    });
+  </script>
 {% endblock %}

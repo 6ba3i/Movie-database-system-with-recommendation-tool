@@ -8,84 +8,210 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset & Global Styles */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Syne', sans-serif; background-color: #fefef7; color: #333; }
 
-    /* Navbar */
     nav {
       background: #333;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem;
-      margin-bottom: 1rem;
+      padding: 1.5rem; 
+      margin-bottom: 1.5rem;
     }
+
     .nav-left a {
       color: #fefef7;
       text-decoration: none;
       font-weight: 600;
-      font-size: 20px;
+      font-size: 24px; 
     }
+
     .nav-right {
       display: flex;
       align-items: center;
+      gap: 30px; 
     }
+
     .nav-right form {
-      margin-right: 20px;
+      display: flex;
+      align-items: center;
     }
+
     .nav-right input[type="text"] {
-      padding: 0.3rem 0.6rem;
-      border: 1px solid #fefef7;
-      border-radius: 4px;
+      padding: 1rem 1.5rem; 
+      font-size: 18px; 
+      border: 2px solid #fefef7;
+      border-radius: 8px;
       outline: none;
-      margin-right: 0.5rem;
+      margin-right: 1rem;
+      width: 300px; 
+      transition: border 0.3s ease, background 0.3s ease;
     }
+
+    .nav-right input[type="text"]:focus {
+      border-color: #fff;
+      background-color: #fff;
+    }
+
     .nav-right button {
       background: #fefef7;
       color: #333;
       border: none;
-      padding: 0.4rem 0.7rem;
-      border-radius: 4px;
+      padding: 1rem 1.5rem; 
+      font-size: 18px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
-    .nav-right button:hover { background: #ddd; }
 
-    /* Profile Widget */
+    .nav-right button:hover {
+      background: #ddd;
+      transform: scale(1.1); 
+    }
+
+    .auth-links a {
+      display: inline-block;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      color: #fff;
+      background-color: #333;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .auth-links a:hover {
+      background: #444;
+    }
+
+    .flash-messages {
+      width: 90%;
+      max-width: 1000px; 
+      margin: 0 auto 2rem auto;
+    }
+
+    .flash-messages ul { list-style: none; padding: 0; }
+
+    .flash-messages li {
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 1px solid #ccc;
+      background: #eee;
+      border-radius: 6px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Movie Slider Section (with Horizontal Scrolling) */
+    .movie-slider {
+      display: flex;
+      flex-wrap: nowrap; 
+      gap: 2rem; /* Increased gap */
+      justify-content: flex-start; 
+      margin-bottom: 40px; 
+      width: 100%;
+      overflow-x: auto; 
+      padding: 0 20px; 
+      scrollbar-width: thin;
+      scrollbar-color: #888 #fefef7;
+    }
+
+    /* Movie Box Styling */
+    .movie-box {
+      flex: 0 0 auto;
+      width: 50%; /* Initial size of movie box as 70% of the section's width */
+      height: 50%; /* Initial height */
+      max-width: 200px; /* Maximum width */
+      max-height: 500px; /* Maximum height */
+      margin: 1rem;
+      border: 1px solid #333;
+      background: #fff;
+      border-radius: 12px; 
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.2s ease, width 0.2s ease, height 0.2s ease;
+      overflow: hidden;
+    }
+
+    /* Hover effect for the movie box (growing size on hover) */
+    .movie-box:hover {
+      transform: scale(1.1);
+      width: 220;
+      height: 60%;
+    }
+
+    /* Image inside movie box */
+    .rounded-img {
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+    }
+
+    .rounded-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Movie Slider Scrollbar */
+    .movie-slider::-webkit-scrollbar {
+      height: 10px; 
+    }
+
+    .movie-slider::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .movie-slider::-webkit-scrollbar-track {
+      background: #fefef7;
+    }
+
+    /* Button Styling for Movie Details Link */
+    .button-link {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid #333;
+      border-radius: 6px; 
+      text-decoration: none;
+      color: #333;
+      background: #fefef7;
+      margin-top: 1rem;
+    }
+
+    .button-link:hover {
+      background: #ddd;
+    }
+
+    /* Profile Widget Styling */
     .profile-widget {
-      position: relative; /* Positions dropdown relative to this container */
+      position: relative;
       display: inline-flex;
       align-items: center;
       border: 1px solid #ccc;
-      padding: 5px 10px;
-      border-radius: 4px;
+      padding: 10px 15px;
+      border-radius: 8px;
       background: #444;
       cursor: pointer;
     }
+
     .profile-widget span {
-      color: #fefef7;  /* White text for contrast */
-      font-size: 14px;
+      color: #fefef7;
+      font-size: 16px;
       margin-right: 10px;
     }
-    .profile-widget img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-    }
 
-    /* Sign Up / Login Links for Logged-out Users */
-    .auth-links a {
-      color: #fefef7;
-      text-decoration: none;
-      font-size: 14px;
-      margin-left: 15px;
-      border: 1px solid #fefef7;
-      padding: 5px 10px;
-      border-radius: 4px;
-      transition: background 0.3s;
-    }
-    .auth-links a:hover {
-      background: #555;
+    .profile-widget img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
     }
 
     /* Dropdown Menu */
@@ -100,94 +226,35 @@
       border-radius: 4px;
       z-index: 1;
     }
+
     #dropdownMenu a {
       display: block;
-      padding: 10px;
+      padding: 12px;
       color: #333;
       text-decoration: none;
     }
+
     #dropdownMenu a:hover {
       background: #f0f0f0;
     }
 
-    /* Flash Messages */
-    .flash-messages {
-      width: 90%;
-      max-width: 900px;
-      margin: 0 auto 1rem auto;
-    }
-    .flash-messages ul { list-style: none; padding: 0; }
-    .flash-messages li {
-      padding: 0.5rem;
-      margin: 0.5rem 0;
-      border: 1px solid #ccc;
-      background: #eee;
-      border-radius: 6px;
-    }
+    /* Responsive Design for Smaller Screens */
+    @media (max-width: 768px) {
+      .movie-box {
+        width: 80%; 
+        height: 80%;
+        max-width: 180px;
+        max-height: 350px; 
+      }
 
-    /* Main Container */
-    .container {
-      width: 90%;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
+      .movie-slider {
+        gap: 1rem; 
+      }
 
-    /* Spacing for Movie Sections */
-    .movie-slider {
-      display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 1rem;
-      margin-bottom: 20px;
+      .profile-widget {
+        font-size: 14px;
+      }
     }
-    .movie-slider::-webkit-scrollbar { height: 8px; }
-    .movie-slider::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
-    }
-    hr {
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    /* Movie Widgets */
-    .movie-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
-    .movie-box {
-      flex: 0 0 auto;
-      width: 160px;
-      margin: 0.5rem;
-      border: 1px solid #333;
-      background: #fff;
-      border-radius: 8px;
-      padding: 10px;
-      text-align: center;
-    }
-    .movie-box strong { display: block; margin-bottom: 0.5rem; }
-    .rounded-img {
-      border-radius: 8px;
-      overflow: hidden;
-      width: 100%;
-      max-width: 160px;
-      margin: 0 auto;
-    }
-    .rounded-img img { width: 100%; display: block; }
-    .button-link {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border: 1px solid #333;
-      border-radius: 4px;
-      text-decoration: none;
-      color: #333;
-      background: #fefef7;
-      margin-top: 0.5rem;
-    }
-    .button-link:hover { background: #ddd; }
   </style>
 </head>
 <body>
@@ -219,7 +286,6 @@
     </div>
     <script>
          function toggleDropdown(e) {
-             // Prevent the click from propagating to the window handler.
              e.stopPropagation();
              var dropdown = document.getElementById('dropdownMenu');
              if (dropdown.style.display === 'none' || dropdown.style.display === '') {
