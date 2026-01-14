@@ -239,7 +239,7 @@ def login():
         password = request.form.get("password")
         if email and password:
             # Use the provided API key (consider storing it in an environment variable for production)
-            api_key = os.environ["FIREBASE_API_KEY"]
+            api_key = "personal_api_key"
             url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={api_key}"
             payload = {
                 "email": email,
